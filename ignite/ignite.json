@@ -1,0 +1,11 @@
+{
+  "createdWith": "2.1.0",
+  "examples": "classic",
+  "navigation": "react-navigation",
+  "askToOverwrite": true,
+  "generators": {
+    "component": "ignite-ir-boilerplate-bowser",
+    "model": "ignite-ir-boilerplate-bowser",
+    "screen": "ignite-ir-boilerplate-bowser"
+  }
+}
