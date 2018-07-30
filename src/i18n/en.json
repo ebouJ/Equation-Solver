@@ -4,6 +4,10 @@
     "cancel": "Cancel",
     "back": "Back"
   },
+  "home": {
+    "header": "Equation Solver",
+    "systems": "Systems of Equation"
+  },
   "errors": {
     "invalidEmail": "Invalid email address."
   },
