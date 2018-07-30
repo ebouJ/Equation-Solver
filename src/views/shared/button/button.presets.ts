@@ -1,6 +1,8 @@
-import { ViewStyle, TextStyle } from "react-native"
+import { ViewStyle, TextStyle, Dimensions } from "react-native"
 import { color } from "../../../theme/color"
 import { spacing } from "../../../theme/spacing"
+
+const { width } = Dimensions.get('window')
 
 /**
  * All text will start off looking like this.
@@ -8,7 +10,9 @@ import { spacing } from "../../../theme/spacing"
 const BASE_VIEW: ViewStyle = {
   paddingVertical: spacing[2],
   paddingHorizontal: spacing[2],
-  borderRadius: 4,
+  borderRadius: 20,
+  width: width - width / 5,
+  height: 40,
   justifyContent: "center",
   alignItems: "center",
 }
@@ -40,7 +44,7 @@ export const viewPresets = {
 }
 
 export const textPresets = {
-  primary: { ...BASE_TEXT, fontSize: 9, color: color.palette.white } as TextStyle,
+  primary: { ...BASE_TEXT, fontSize: 17, color: color.palette.white } as TextStyle,
   link: {
     ...BASE_TEXT,
     color: color.text,

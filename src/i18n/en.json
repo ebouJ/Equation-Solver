@@ -6,7 +6,13 @@
   },
   "home": {
     "header": "Equation Solver",
-    "systems": "Systems of Equation"
+    "systems": "Systems of Equation",
+    "two": "Two Variables",
+    "three": "Three Variables",
+    "linear": "Linear Equation",
+    "quadratic": "Quadratic Equation",
+    "cubic": "Cubic Equation",
+    "polynomials": "Polynomials"
   },
   "errors": {
     "invalidEmail": "Invalid email address."
