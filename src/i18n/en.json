@@ -14,18 +14,10 @@
     "cubic": "Cubic Equation",
     "polynomials": "Polynomials"
   },
+  "linear": {
+    "header": "Linear Equation"
+  },
   "errors": {
     "invalidEmail": "Invalid email address."
-  },
-  "firstExampleScreen": {
-    "poweredBy": "POWERED BY BOWSER",
-    "readyForLaunch": "Ready for launch.",
-    "continue": "CONTINUE"
-  },
-  "secondExampleScreen": {
-    "howTo": "HOW TO",
-    "title": "What’s In This Stack?",
-    "tagLine": "Congratulations, you’ve got a very advanced React Native app template here.  Take advantage of this boilerplate!",
-    "reactotron": "Demo Reactotron"
   }
 }

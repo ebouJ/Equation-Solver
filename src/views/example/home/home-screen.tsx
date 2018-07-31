@@ -14,10 +14,6 @@ const ROOT: ViewStyle = {
   flex: 1
 }
 
-const HeaderStyle: ViewStyle = {
-  backgroundColor: color.primaryDarker,
-}
-
 const FirstView: ViewStyle = {
   flex: .6,
   marginLeft: 20,
@@ -32,6 +28,9 @@ const SecondView: ViewStyle = {
 const TextStyle: TextStyle = {
   fontSize: 20
 }
+const HeaderStyle: ViewStyle = {
+  backgroundColor: color.primaryDarker,
+}
 
 const ButtonStyle: ViewStyle = {
   marginTop: 20, 
@@ -40,8 +39,9 @@ const ButtonStyle: ViewStyle = {
 
 export class Home extends React.Component<HomeScreenProps, {}> {
   
-  navigate = () => {
-    alert('pressed')
+  navigate = screen => {
+    const { navigate } = this.props.navigation
+    screen && navigate(screen)
   }
 
   render () {
@@ -50,14 +50,14 @@ export class Home extends React.Component<HomeScreenProps, {}> {
         <Header  headerTx="home.header" style={HeaderStyle} titleStyle={TextStyle} />
         <View style={FirstView}>
           <Text tx="home.polynomials" />
-          <Button  tx="home.linear" style={ButtonStyle} onPress={this.navigate}/>
-          <Button  tx="home.quadratic" style={ButtonStyle}/>
-          <Button  tx="home.cubic" style={ButtonStyle}/>
+          <Button  tx="home.linear" style={ButtonStyle} onPress={() => this.navigate('linearEquation')}/>
+          <Button  tx="home.quadratic" style={ButtonStyle} onPress={() => this.navigate('quadraticEquation')}/>
+          <Button  tx="home.cubic" style={ButtonStyle} onPress={() => this.navigate('cubicEquation')}/>
         </View> 
         <View style={SecondView}>
           <Text tx="home.systems" />
-          <Button  tx="home.two" style={ButtonStyle} />
-          <Button  tx="home.three" style={ButtonStyle}/>
+          <Button  tx="home.two" style={ButtonStyle} onPress={() => this.navigate('twoLinearEquation')}/>
+          <Button  tx="home.three" style={ButtonStyle} onPress={() => this.navigate('threeLinearEquation')}/>
         </View> 
       </View>
     )

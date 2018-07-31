@@ -4,6 +4,7 @@ import { ViewStyle } from "react-native"
 import { Text } from "../../shared/text"
 import { Screen } from "../../shared/screen"
 import { color } from "../../../theme"
+import { Header } from '../../shared/header'
 import { NavigationScreenProps } from "react-navigation"
 
 export interface TwoLinearEquationScreenProps extends NavigationScreenProps<{}> {
