@@ -40,6 +40,8 @@ export const viewPresets = {
     paddingHorizontal: 0,
     paddingVertical: 0,
     alignItems: "flex-start",
+    width: 60, 
+    height: 60
   } as ViewStyle,
 }
 

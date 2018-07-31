@@ -42,7 +42,7 @@ export class Header extends React.Component<HeaderProps, {}> {
     return (
       <View style={{ ...ROOT, ...this.props.style, height: height / 8 }}>
         {leftIcon ? (
-          <Button preset="link" onPress={onLeftPress} style={{ width: 60, height: 60}}>
+          <Button preset="link" onPress={onLeftPress} >
             <Icon name={leftIcon} size={20} color="white"  />
           </Button>
         ) : (
