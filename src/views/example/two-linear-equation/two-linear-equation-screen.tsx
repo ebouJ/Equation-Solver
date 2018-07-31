@@ -1,6 +1,5 @@
 import * as React from "react"
-import { observer } from "mobx-react"
-import { ViewStyle } from "react-native"
+import { ViewStyle, TextStyle, View } from "react-native"
 import { Text } from "../../shared/text"
 import { Screen } from "../../shared/screen"
 import { color } from "../../../theme"
@@ -12,16 +11,28 @@ export interface TwoLinearEquationScreenProps extends NavigationScreenProps<{}> 
 
 const ROOT: ViewStyle = {
   backgroundColor: color.palette.black,
+  flex: 1
+}
+const TextStyle: TextStyle = {
+  fontSize: 20
+}
+const HeaderStyle: ViewStyle = {
+  backgroundColor: color.primaryDarker,
 }
 
-// @inject("mobxstuff")
-@observer
 export class TwoLinearEquation extends React.Component<TwoLinearEquationScreenProps, {}> {
   render () {
+    const { goBack } = this.props.navigation
     return (
-      <Screen style={ROOT} preset="fixedCenter">
-        <Text preset="header" tx="twoLinearEquation.header" />
-      </Screen>
+      <View style={ROOT}>
+        <Header  
+          headerTx="two.header" 
+          style={HeaderStyle} 
+          titleStyle={TextStyle}
+          leftIcon="chevron-left"
+          onLeftPress={() => goBack()}
+           />
+      </View>
     )
   }
 }

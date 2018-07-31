@@ -1,12 +1,14 @@
 import * as React from "react"
-import { View, ViewStyle, TextStyle } from "react-native"
+import { View, ViewStyle, TextStyle, Dimensions } from "react-native"
 import { HeaderProps } from "./header.props"
 import { Button } from "../button"
-import { Icon } from "../icon"
 import { Text } from "../text"
 import { spacing } from "../../../theme"
 import { translate } from "../../../i18n/"
+import Icon from 'react-native-vector-icons/FontAwesome'
 
+
+const { height } = Dimensions.get('window')
 // static styles
 const ROOT: ViewStyle = {
   flexDirection: "row",
@@ -38,10 +40,10 @@ export class Header extends React.Component<HeaderProps, {}> {
     const header = headerText || (headerTx && translate(headerTx)) || ""
 
     return (
-      <View style={{ ...ROOT, ...this.props.style }}>
+      <View style={{ ...ROOT, ...this.props.style, height: height / 8 }}>
         {leftIcon ? (
-          <Button preset="link" onPress={onLeftPress}>
-            <Icon icon={leftIcon} />
+          <Button preset="link" onPress={onLeftPress} style={{ width: 60, height: 60}}>
+            <Icon name={leftIcon} size={20} color="white"  />
           </Button>
         ) : (
           <View style={LEFT} />
@@ -51,7 +53,7 @@ export class Header extends React.Component<HeaderProps, {}> {
         </View>
         {rightIcon ? (
           <Button preset="link" onPress={onRightPress}>
-            <Icon icon={rightIcon} />
+            <Icon name={rightIcon} />
           </Button>
         ) : (
           <View style={RIGHT} />

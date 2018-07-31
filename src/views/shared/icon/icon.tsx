@@ -9,7 +9,7 @@ const ROOT: ImageStyle = {
 
 export function Icon(props: IconProps) {
   const { style: styleOverride, icon, containerStyle } = props
-  const style: ImageStyle = { ...ROOT, ...styleOverride }
+  const style: ImageStyle = { ...ROOT, ...styleOverride}
 
   return (
     <View style={containerStyle}>

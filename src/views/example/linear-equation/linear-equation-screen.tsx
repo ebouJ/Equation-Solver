@@ -11,6 +11,7 @@ export interface LinearEquationScreenProps extends NavigationScreenProps<{}> {
 
 const ROOT: ViewStyle = {
   backgroundColor: color.palette.black,
+  flex: 1
 }
 
 const TextStyle: TextStyle = {
@@ -24,9 +25,16 @@ const HeaderStyle: ViewStyle = {
 @observer
 export class LinearEquation extends React.Component<LinearEquationScreenProps, {}> {
   render () {
+    const { goBack } = this.props.navigation
     return (
       <View style={ROOT} >
-        <Header  headerTx="linear.header" style={HeaderStyle} titleStyle={TextStyle} />
+        <Header  
+          headerTx="linear.header" 
+          style={HeaderStyle} 
+          titleStyle={TextStyle}
+          leftIcon="chevron-left"
+          onLeftPress={() => goBack()}
+           />
       </View>
     )
   }

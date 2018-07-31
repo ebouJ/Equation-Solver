@@ -17,6 +17,18 @@
   "linear": {
     "header": "Linear Equation"
   },
+  "quadratic": {
+    "header": "Quadratic Equation"
+  },
+  "cubic": {
+    "header": "Cubic Equation"
+  },
+  "three": {
+    "header": "3 Variable Equations"
+  },
+  "two": {
+    "header": "2 Variable Equations"
+  },
   "errors": {
     "invalidEmail": "Invalid email address."
   }
