@@ -77,7 +77,8 @@ interface State {
   a: string,
   b: string,
   c: string,
-  d: string
+  d: string,
+  roots: string[]
 }
 
 export class CubicEquation extends React.Component<CubicEquationScreenProps, State> {
@@ -85,7 +86,8 @@ export class CubicEquation extends React.Component<CubicEquationScreenProps, Sta
     a: null,
     b: null,
     c: null,
-    d: null
+    d: null,
+    roots: null
   }
  
   solve = async () => {
@@ -96,11 +98,12 @@ export class CubicEquation extends React.Component<CubicEquationScreenProps, Sta
 
 
     const roots = await SolveCubic(Number(a),Number(b),Number(c),Number(d))
-    console.log(roots)
+    this.setState({ roots })
   }
 
   render () {
     const { goBack } = this.props.navigation
+    const { roots } = this.state
     return (
       <View style={ROOT} >
         <Header  
@@ -120,7 +123,7 @@ export class CubicEquation extends React.Component<CubicEquationScreenProps, Sta
               onError={() => console.error('Error')}
             />
            </View>
-           <View style={{ flex: 0.7,justifyContent: 'space-around',}}>
+           <View style={{ flex: 0.6,justifyContent: 'space-around',}}>
            <View style={InputView}>
                 <Text style={textStyle}>a  =</Text>
                 <TextField 
@@ -162,7 +165,14 @@ export class CubicEquation extends React.Component<CubicEquationScreenProps, Sta
                <Button preset="solve" text="Clear" />
               </View>
            </View>
-           <View  style={{ flex: 0.2,}}/>
+           <View style={{ justifyContent: 'space-around', alignItems: 'center', flex:0.2}}>
+            {
+              roots && roots.map((item, index) => {
+                const ind = index + 1
+                  return <Text key={index} style={textStyle}>{"x" + ind  + " = " + item.toFixed(3)}</Text>
+              })
+            }
+            </View>
       </View>
     )
   }
