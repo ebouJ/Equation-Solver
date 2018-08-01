@@ -7,6 +7,7 @@ import { Button } from '../../shared/button'
 import { TextField } from '../../shared/text-field'
 import { Header } from '../../shared/header'
 import { NavigationScreenProps } from "react-navigation"
+import QuadracticSolve from '../../../lib/quadratic'
 
 export interface QuadraticEquationScreenProps extends NavigationScreenProps<{}> {
 }
@@ -29,7 +30,8 @@ const EquationView: ViewStyle = {
 
 const textStyle: TextStyle = {
   marginTop: 15, 
-  fontSize: 20
+  fontSize: 20,
+  color: 'white'
 }
 const InputView: ViewStyle = {
   flexDirection: 'row',
@@ -71,9 +73,38 @@ html, body {
 }
 `;
 
-export class QuadraticEquation extends React.Component<QuadraticEquationScreenProps, {}> {
+interface State {
+  a: string,
+  b: string,
+  c: string,
+  loaded: boolean,
+  roots: string[]
+}
+
+export class QuadraticEquation extends React.Component<QuadraticEquationScreenProps, State> {
+
+  state = {
+    a: null,
+    b: null,
+    c: null,
+    loaded: false,
+    roots: null
+  }
+  solve = async () => {
+    const { a, b , c  } = this.state
+    if(isNaN(a) || isNaN(b) || isNaN(c) ){
+       return;
+    }
+
+
+    const roots = await QuadracticSolve(Number(a),Number(b),Number(c))
+    this.setState({ roots })
+
+  }
   render () {
     const { goBack } = this.props.navigation
+    const { roots } = this.state
+
     return (
       <View style={ROOT}>
         <Header  
@@ -90,7 +121,7 @@ export class QuadraticEquation extends React.Component<QuadraticEquationScreenPr
               inlineStyle={inlineStyle}
               displayMode={false}
               colorIsTextColor={false}
-              onLoad={()=> this.setState({ loaded: true })}
+              onLoad={() => this.setState({ loaded: true })}
               onError={() => console.error('Error')}
             />
            </View>
@@ -100,6 +131,7 @@ export class QuadraticEquation extends React.Component<QuadraticEquationScreenPr
                   style={Input} 
                   inputStyle={inputStyle}
                   keyboardType={'numeric'}
+                  onChangeText={(a) => this.setState({ a })}
                 />
            </View>
            <View style={InputView}>
@@ -108,6 +140,7 @@ export class QuadraticEquation extends React.Component<QuadraticEquationScreenPr
                   style={Input} 
                   inputStyle={inputStyle}
                   keyboardType={'numeric'}
+                  onChangeText={b => this.setState({ b })}
                 />
            </View>
            <View style={InputView}>
@@ -116,12 +149,21 @@ export class QuadraticEquation extends React.Component<QuadraticEquationScreenPr
                   style={Input} 
                   inputStyle={inputStyle}
                   keyboardType={'numeric'}
+                  onChangeText={c => this.setState({ c })}
                 />
            </View>
            <View style={ButtonView}>
-              <Button preset="solve" text="Solve" />
+              <Button preset="solve" text="Solve" onPress={this.solve} />
               <Button preset="solve" text="Clear" />
            </View>
+           <View style={{ justifyContent: 'center', alignItems: 'center'}}>
+            {
+              roots && roots.map((item, index) => {
+                const ind = index + 1
+                  return <Text key={index} style={textStyle}>{"x" + ind  + " = " + item}</Text>
+              })
+            }
+            </View>
       </View>
     )
   }
