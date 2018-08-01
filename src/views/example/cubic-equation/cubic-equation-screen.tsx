@@ -81,14 +81,16 @@ interface State {
   roots: string[]
 }
 
+const initialState = {
+  a: null,
+  b: null,
+  c: null,
+  d: null,
+  roots: null
+}
+
 export class CubicEquation extends React.Component<CubicEquationScreenProps, State> {
-  state = {
-    a: null,
-    b: null,
-    c: null,
-    d: null,
-    roots: null
-  }
+  state = initialState
  
   solve = async () => {
     const { a, b , c , d } = this.state
@@ -101,9 +103,13 @@ export class CubicEquation extends React.Component<CubicEquationScreenProps, Sta
     this.setState({ roots })
   }
 
+  clear = () => {
+    this.setState(initialState)
+  }
+
   render () {
     const { goBack } = this.props.navigation
-    const { roots } = this.state
+    const { roots, a, b , c , d } = this.state
     return (
       <View style={ROOT} >
         <Header  
@@ -128,6 +134,7 @@ export class CubicEquation extends React.Component<CubicEquationScreenProps, Sta
                 <Text style={textStyle}>a  =</Text>
                 <TextField 
                   style={Input} 
+                  value={a}
                   inputStyle={inputStyle}
                   keyboardType={'numeric'}
                   onChangeText={(a) => this.setState({ a })}
@@ -137,6 +144,7 @@ export class CubicEquation extends React.Component<CubicEquationScreenProps, Sta
                 <Text style={textStyle}>b  =</Text>
                 <TextField 
                   style={Input} 
+                  value={b}
                   inputStyle={inputStyle}
                   keyboardType={'numeric'}
                   onChangeText={(b) => this.setState({ b })}
@@ -146,6 +154,7 @@ export class CubicEquation extends React.Component<CubicEquationScreenProps, Sta
                 <Text style={textStyle}> c  =</Text>
                 <TextField 
                   style={Input} 
+                  value={c}
                   inputStyle={inputStyle}
                   keyboardType={'numeric'}
                   onChangeText={(c) => this.setState({ c })}
@@ -155,6 +164,7 @@ export class CubicEquation extends React.Component<CubicEquationScreenProps, Sta
                 <Text style={textStyle}>d  =</Text>
                 <TextField 
                   style={Input} 
+                  value={d}
                   inputStyle={inputStyle}
                   keyboardType={'numeric'}
                   onChangeText={(d) => this.setState({ d })}
@@ -162,7 +172,7 @@ export class CubicEquation extends React.Component<CubicEquationScreenProps, Sta
            </View>
            <View style={ButtonView}>
                <Button preset="solve" text="Solve" onPress={this.solve} />
-               <Button preset="solve" text="Clear" />
+               <Button preset="solve" text="Clear" onPress={this.clear} />
               </View>
            </View>
            <View style={{ justifyContent: 'space-around', alignItems: 'center', flex:0.2}}>

@@ -1,8 +1,9 @@
 import * as React from "react"
 import { ViewStyle, TextStyle, View, Dimensions } from "react-native"
-import Katex from 'react-native-katex';
+import Katex from 'react-native-katex'
 import { Text } from "../../shared/text"
 import { color } from "../../../theme"
+import Toast from 'react-native-simple-toast'
 import { Button } from '../../shared/button'
 import { TextField } from '../../shared/text-field'
 import { Header } from '../../shared/header'
@@ -81,19 +82,22 @@ interface State {
   roots: string[]
 }
 
+const initialState = {
+  a: null,
+  b: null,
+  c: null,
+  loaded: false,
+  roots: null
+}
+
 export class QuadraticEquation extends React.Component<QuadraticEquationScreenProps, State> {
 
-  state = {
-    a: null,
-    b: null,
-    c: null,
-    loaded: false,
-    roots: null
-  }
+  state = initialState
   solve = async () => {
     const { a, b , c  } = this.state
-    if(isNaN(a) || isNaN(b) || isNaN(c) ){
-       return;
+    if(isNaN(a) || isNaN(b) || isNaN(c)){
+      Toast.showWithGravity('The input should be a number.', Toast.SHORT, Toast.CENTER)
+       return
     }
 
 
@@ -101,9 +105,13 @@ export class QuadraticEquation extends React.Component<QuadraticEquationScreenPr
     this.setState({ roots })
 
   }
+
+  clear = () => {
+    this.setState(initialState)
+  }
   render () {
     const { goBack } = this.props.navigation
-    const { roots } = this.state
+    const { roots, a, b , c } = this.state
 
     return (
       <View style={ROOT}>
@@ -117,18 +125,17 @@ export class QuadraticEquation extends React.Component<QuadraticEquationScreenPr
           <View style={EquationView}> 
            <Katex
               expression="ax^2 + bx + c = 0"
-              style={{flex: 1}}
+              style={{ flex: 1 }}
               inlineStyle={inlineStyle}
               displayMode={false}
               colorIsTextColor={false}
-              onLoad={() => this.setState({ loaded: true })}
-              onError={() => console.error('Error')}
             />
            </View>
            <View style={InputView}>
                 <Text style={textStyle}> a  = </Text>
                 <TextField 
                   style={Input} 
+                  value={a}
                   inputStyle={inputStyle}
                   keyboardType={'numeric'}
                   onChangeText={(a) => this.setState({ a })}
@@ -138,6 +145,7 @@ export class QuadraticEquation extends React.Component<QuadraticEquationScreenPr
                 <Text style={textStyle}> b  = </Text>
                 <TextField 
                   style={Input} 
+                  value={b}
                   inputStyle={inputStyle}
                   keyboardType={'numeric'}
                   onChangeText={b => this.setState({ b })}
@@ -147,6 +155,7 @@ export class QuadraticEquation extends React.Component<QuadraticEquationScreenPr
                 <Text style={textStyle}> c  = </Text>
                 <TextField 
                   style={Input} 
+                  value={c}
                   inputStyle={inputStyle}
                   keyboardType={'numeric'}
                   onChangeText={c => this.setState({ c })}
@@ -154,7 +163,7 @@ export class QuadraticEquation extends React.Component<QuadraticEquationScreenPr
            </View>
            <View style={ButtonView}>
               <Button preset="solve" text="Solve" onPress={this.solve} />
-              <Button preset="solve" text="Clear" />
+              <Button preset="solve" text="Clear" onPress={this.clear} />
            </View>
            <View style={{ justifyContent: 'center', alignItems: 'center'}}>
             {

@@ -3,6 +3,7 @@ import { ViewStyle, View, TextStyle, Dimensions } from "react-native"
 import { Text } from "../../shared/text"
 import Katex from 'react-native-katex';
 import { color } from "../../../theme"
+import Toast from 'react-native-simple-toast'
 import { Header } from '../../shared/header'
 import { Button } from '../../shared/button'
 import { TextField } from '../../shared/text-field'
@@ -72,9 +73,45 @@ html, body {
   color: white;
 }
 `;
-export class LinearEquation extends React.Component<LinearEquationScreenProps, {}> {
+
+interface State {
+  a: string,
+  b: string,
+  c: string,
+  roots: string[]
+}
+
+const initialState = {
+  a: null,
+  b: null,
+  c: null,
+  roots: null
+}
+
+export class LinearEquation extends React.Component<LinearEquationScreenProps, State> {
+  
+  state = initialState
+
+  solve = async () => {
+    const { a, b, c  } = this.state
+    if(isNaN(a) || isNaN(b) || isNaN(c) ){
+      Toast.showWithGravity('The input should be a number.', Toast.SHORT, Toast.CENTER)
+       return;
+    }
+
+    const roots = []
+
+
+     roots.push((c - b) / a)
+    this.setState({ roots })
+  }
+
+  clear = () => {
+    this.setState(initialState)
+  }
   render () {
     const { goBack } = this.props.navigation
+    const { roots, a, b, c} = this.state
     return (
       <View style={ROOT} >
         <Header  
@@ -84,21 +121,22 @@ export class LinearEquation extends React.Component<LinearEquationScreenProps, {
           leftIcon="chevron-left"
           onLeftPress={() => goBack()}
            />
-                     <View style={EquationView}> 
+          <View style={EquationView}> 
            <Katex
-              expression="ax + b = 0"
+              expression="ax + b = c"
               style={{flex: 1}}
               inlineStyle={inlineStyle}
               displayMode={false}
               colorIsTextColor={false}
-              onLoad={()=> this.setState({ loaded: true })}
               onError={() => console.error('Error')}
             />
            </View>
            <View style={InputView}>
                 <Text style={textStyle}> a  = </Text>
                 <TextField 
-                  style={Input} 
+                  style={Input}
+                  onChangeText={ a => this.setState({ a})} 
+                  value={a}
                   inputStyle={inputStyle}
                   keyboardType={'numeric'}
                 />
@@ -107,14 +145,34 @@ export class LinearEquation extends React.Component<LinearEquationScreenProps, {
                 <Text style={textStyle}> b  = </Text>
                 <TextField 
                   style={Input} 
+                  value={b}
+                  onChangeText={b => this.setState({b})} 
+                  inputStyle={inputStyle}
+                  keyboardType={'numeric'}
+                />
+           </View>
+           <View style={InputView}>
+                <Text style={textStyle}> c  = </Text>
+                <TextField 
+                  style={Input} 
+                  onChangeText={c => this.setState({c})} 
+                  value={c}
                   inputStyle={inputStyle}
                   keyboardType={'numeric'}
                 />
            </View>
            <View style={ButtonView}>
-           <Button preset="solve" text="Solve" />
-           <Button preset="solve" text="Clear" />
+           <Button preset="solve" text="Solve" onPress={this.solve} />
+           <Button preset="solve" text="Clear" onPress={this.clear} />
            </View>
+           <View style={{ justifyContent: 'space-around', alignItems: 'center', flex: 0.2}}>
+            {
+              roots && roots.map((item, index) => {
+                const ind = index + 1
+                  return <Text key={index} style={textStyle}>{"x" + ind  + " = " + item.toFixed(3)}</Text>
+              })
+            }
+            </View>
       </View>
     )
   }
