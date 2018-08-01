@@ -4,6 +4,7 @@ import { Text } from "../../shared/text"
 import Katex from 'react-native-katex';
 import { color } from "../../../theme"
 import { Header } from '../../shared/header'
+import { Button } from '../../shared/button'
 import { TextField } from '../../shared/text-field'
 import { NavigationScreenProps } from "react-navigation"
 
@@ -12,23 +13,18 @@ export interface LinearEquationScreenProps extends NavigationScreenProps<{}> {
 
 
 
-const TextStyle: TextStyle = {
-  fontSize: 20
-}
-const HeaderStyle: ViewStyle = {
-  backgroundColor: color.primaryDarker,
-}
 const { width, height } = Dimensions.get('window')
 
 const ROOT: ViewStyle = {
   backgroundColor: color.palette.black,
   flex: 1
 }
-
+const TextStyle: TextStyle = {
+  fontSize: 20
+}
 const InputView: ViewStyle = {
   flexDirection: 'row',
-  marginLeft: 20,
-  marginTop: 20
+  margin: 20
 }
 
 const inputStyle: TextStyle = {
@@ -41,6 +37,9 @@ const Input: ViewStyle = {
   height: 15,
   marginLeft: 20
 }
+const HeaderStyle: ViewStyle = {
+  backgroundColor: color.primaryDarker,
+}
 const EquationView: ViewStyle = {
   width: width,
   height: height / 8,
@@ -49,6 +48,12 @@ const EquationView: ViewStyle = {
 const textStyle: TextStyle = {
   marginTop: 15, 
   fontSize: 20
+}
+
+const ButtonView: ViewStyle = {
+  flexDirection: 'row', 
+  margin: 20, 
+  justifyContent: 'space-between'
 }
 
 const inlineStyle =`
@@ -105,6 +110,10 @@ export class LinearEquation extends React.Component<LinearEquationScreenProps, {
                   inputStyle={inputStyle}
                   keyboardType={'numeric'}
                 />
+           </View>
+           <View style={ButtonView}>
+           <Button preset="solve" text="Solve" />
+           <Button preset="solve" text="Clear" />
            </View>
       </View>
     )

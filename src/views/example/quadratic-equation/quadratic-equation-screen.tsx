@@ -3,6 +3,7 @@ import { ViewStyle, TextStyle, View, Dimensions } from "react-native"
 import Katex from 'react-native-katex';
 import { Text } from "../../shared/text"
 import { color } from "../../../theme"
+import { Button } from '../../shared/button'
 import { TextField } from '../../shared/text-field'
 import { Header } from '../../shared/header'
 import { NavigationScreenProps } from "react-navigation"
@@ -44,6 +45,12 @@ const Input: ViewStyle = {
   width: width / 4,
   height: 15,
   marginLeft: 20
+}
+
+const ButtonView: ViewStyle = {
+  flexDirection: 'row', 
+  margin: 20, 
+  justifyContent: 'space-between'
 }
 
 
@@ -110,6 +117,10 @@ export class QuadraticEquation extends React.Component<QuadraticEquationScreenPr
                   inputStyle={inputStyle}
                   keyboardType={'numeric'}
                 />
+           </View>
+           <View style={ButtonView}>
+           <Button preset="solve" text="Solve" />
+           <Button preset="solve" text="Clear" />
            </View>
       </View>
     )

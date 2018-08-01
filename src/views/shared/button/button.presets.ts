@@ -17,6 +17,16 @@ const BASE_VIEW: ViewStyle = {
   alignItems: "center",
 }
 
+const BUTTON_VIEW: ViewStyle = {
+  paddingVertical: spacing[2],
+  paddingHorizontal: spacing[2],
+  borderRadius: 20,
+  width: width / 3,
+  height: 40,
+  justifyContent: "center",
+  alignItems: "center",
+}
+
 const BASE_TEXT: TextStyle = {
   paddingHorizontal: spacing[3],
 }
@@ -31,6 +41,8 @@ export const viewPresets = {
    * A smaller piece of secondard information.
    */
   primary: { ...BASE_VIEW, backgroundColor: color.palette.orange } as ViewStyle,
+
+  solve: { ...BUTTON_VIEW, backgroundColor: color.palette.orange } as ViewStyle,
   
   /**
    * A button without extras.
@@ -47,6 +59,7 @@ export const viewPresets = {
 
 export const textPresets = {
   primary: { ...BASE_TEXT, fontSize: 17, color: color.palette.white } as TextStyle,
+  solve: { ...BASE_TEXT, fontSize: 17, color: color.palette.white } as TextStyle,
   link: {
     ...BASE_TEXT,
     color: color.text,

@@ -5,6 +5,7 @@ import Katex from 'react-native-katex';
 import { color } from "../../../theme"
 import { Header } from '../../shared/header'
 import { TextField } from '../../shared/text-field'
+import { Button } from '../../shared/button'
 import { NavigationScreenProps } from "react-navigation"
 
 export interface CubicEquationScreenProps extends NavigationScreenProps<{}> {
@@ -26,12 +27,13 @@ const InputView: ViewStyle = {
 
 const inputStyle: TextStyle = {
   textAlign: 'center', 
-  color: 'black'
+  color: 'black',
+  height: 10
 }
 
 const Input: ViewStyle = {
   width: width / 4,
-  height: 15,
+  height: 8,
   marginLeft: 20
 }
 const HeaderStyle: ViewStyle = {
@@ -39,12 +41,19 @@ const HeaderStyle: ViewStyle = {
 }
 const EquationView: ViewStyle = {
   width: width,
-  height: height / 8,
+  flex: 0.1,
+  backgroundColor: 'yellow'
 }
 
 const textStyle: TextStyle = {
-  marginTop: 15, 
+  marginTop: 20, 
   fontSize: 20
+}
+
+const ButtonView: ViewStyle = {
+  flexDirection: 'row', 
+  margin: 20, 
+  justifyContent: 'space-between'
 }
 
 const inlineStyle =`
@@ -76,7 +85,7 @@ export class CubicEquation extends React.Component<CubicEquationScreenProps, {}>
           leftIcon="chevron-left"
           onLeftPress={() => goBack()}
           />
-            <View style={EquationView}> 
+          <View style={EquationView}> 
            <Katex
               expression="ax^3 + bx^2 + cx + d = 0"
               style={{flex: 1}}
@@ -87,8 +96,9 @@ export class CubicEquation extends React.Component<CubicEquationScreenProps, {}>
               onError={() => console.error('Error')}
             />
            </View>
+           <View style={{ flex: 0.7,justifyContent: 'space-around',}}>
            <View style={InputView}>
-                <Text style={textStyle}> a  = </Text>
+                <Text style={textStyle}>a  =</Text>
                 <TextField 
                   style={Input} 
                   inputStyle={inputStyle}
@@ -96,7 +106,7 @@ export class CubicEquation extends React.Component<CubicEquationScreenProps, {}>
                 />
            </View>
            <View style={InputView}>
-                <Text style={textStyle}> b  = </Text>
+                <Text style={textStyle}>b  =</Text>
                 <TextField 
                   style={Input} 
                   inputStyle={inputStyle}
@@ -104,7 +114,7 @@ export class CubicEquation extends React.Component<CubicEquationScreenProps, {}>
                 />
            </View>
            <View style={InputView}>
-                <Text style={textStyle}> c  = </Text>
+                <Text style={textStyle}> c  =</Text>
                 <TextField 
                   style={Input} 
                   inputStyle={inputStyle}
@@ -112,13 +122,19 @@ export class CubicEquation extends React.Component<CubicEquationScreenProps, {}>
                 />
            </View>
            <View style={InputView}>
-                <Text style={textStyle}> d  = </Text>
+                <Text style={textStyle}>d  =</Text>
                 <TextField 
                   style={Input} 
                   inputStyle={inputStyle}
                   keyboardType={'numeric'}
                 />
            </View>
+           <View style={ButtonView}>
+               <Button preset="solve" text="Solve" />
+               <Button preset="solve" text="Clear" />
+              </View>
+           </View>
+           <View  style={{ flex: 0.2,}}/>
       </View>
     )
   }
