@@ -100,9 +100,11 @@ export class LinearEquation extends React.Component<LinearEquationScreenProps, S
     }
 
     const roots = []
-
-
-     roots.push((c - b) / a)
+    if( a == 0){
+      Toast.showWithGravity('The input is not a linear equation.', Toast.SHORT, Toast.CENTER)
+    } else {
+      roots.push((c - b) / a)
+    }
     this.setState({ roots })
   }
 
