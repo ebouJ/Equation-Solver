@@ -7,11 +7,12 @@ import { Header } from '../../shared/header'
 import { TextField } from '../../shared/text-field'
 import { Button } from '../../shared/button'
 import { NavigationScreenProps } from "react-navigation"
+import SolveCubic from '../../../lib/cubic'
 
 export interface CubicEquationScreenProps extends NavigationScreenProps<{}> {
 }
 
-const { width, height } = Dimensions.get('window')
+const { width } = Dimensions.get('window')
 
 const ROOT: ViewStyle = {
   backgroundColor: color.palette.black,
@@ -42,7 +43,6 @@ const HeaderStyle: ViewStyle = {
 const EquationView: ViewStyle = {
   width: width,
   flex: 0.1,
-  backgroundColor: 'yellow'
 }
 
 const textStyle: TextStyle = {
@@ -73,7 +73,32 @@ html, body {
 }
 `;
 
-export class CubicEquation extends React.Component<CubicEquationScreenProps, {}> {
+interface State {
+  a: string,
+  b: string,
+  c: string,
+  d: string
+}
+
+export class CubicEquation extends React.Component<CubicEquationScreenProps, State> {
+  state = {
+    a: null,
+    b: null,
+    c: null,
+    d: null
+  }
+ 
+  solve = async () => {
+    const { a, b , c , d } = this.state
+    if(isNaN(a) || isNaN(b) || isNaN(c) || isNaN(d)){
+       return;
+    }
+
+
+    const roots = await SolveCubic(Number(a),Number(b),Number(c),Number(d))
+    console.log(roots)
+  }
+
   render () {
     const { goBack } = this.props.navigation
     return (
@@ -92,7 +117,6 @@ export class CubicEquation extends React.Component<CubicEquationScreenProps, {}>
               inlineStyle={inlineStyle}
               displayMode={false}
               colorIsTextColor={false}
-              onLoad={()=> this.setState({ loaded: true })}
               onError={() => console.error('Error')}
             />
            </View>
@@ -103,6 +127,7 @@ export class CubicEquation extends React.Component<CubicEquationScreenProps, {}>
                   style={Input} 
                   inputStyle={inputStyle}
                   keyboardType={'numeric'}
+                  onChangeText={(a) => this.setState({ a })}
                 />
            </View>
            <View style={InputView}>
@@ -111,6 +136,7 @@ export class CubicEquation extends React.Component<CubicEquationScreenProps, {}>
                   style={Input} 
                   inputStyle={inputStyle}
                   keyboardType={'numeric'}
+                  onChangeText={(b) => this.setState({ b })}
                 />
            </View>
            <View style={InputView}>
@@ -119,6 +145,7 @@ export class CubicEquation extends React.Component<CubicEquationScreenProps, {}>
                   style={Input} 
                   inputStyle={inputStyle}
                   keyboardType={'numeric'}
+                  onChangeText={(c) => this.setState({ c })}
                 />
            </View>
            <View style={InputView}>
@@ -127,10 +154,11 @@ export class CubicEquation extends React.Component<CubicEquationScreenProps, {}>
                   style={Input} 
                   inputStyle={inputStyle}
                   keyboardType={'numeric'}
+                  onChangeText={(d) => this.setState({ d })}
                 />
            </View>
            <View style={ButtonView}>
-               <Button preset="solve" text="Solve" />
+               <Button preset="solve" text="Solve" onPress={this.solve} />
                <Button preset="solve" text="Clear" />
               </View>
            </View>

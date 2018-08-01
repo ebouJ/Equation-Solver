@@ -119,8 +119,8 @@ export class QuadraticEquation extends React.Component<QuadraticEquationScreenPr
                 />
            </View>
            <View style={ButtonView}>
-           <Button preset="solve" text="Solve" />
-           <Button preset="solve" text="Clear" />
+              <Button preset="solve" text="Solve" />
+              <Button preset="solve" text="Clear" />
            </View>
       </View>
     )
