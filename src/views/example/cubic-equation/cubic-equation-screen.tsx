@@ -6,6 +6,7 @@ import { color } from "../../../theme"
 import { Header } from '../../shared/header'
 import { TextField } from '../../shared/text-field'
 import { Button } from '../../shared/button'
+import isNotValid from '../../../lib/isValid'
 import { NavigationScreenProps } from "react-navigation"
 import SolveCubic from '../../../lib/cubic'
 
@@ -94,7 +95,7 @@ export class CubicEquation extends React.Component<CubicEquationScreenProps, Sta
  
   solve = async () => {
     const { a, b , c , d } = this.state
-    if(isNaN(a) || isNaN(b) || isNaN(c) || isNaN(d)){
+    if(isNotValid(a) || isNotValid(b) || isNotValid(c) || isNotValid(d)){
        return;
     }
 
@@ -175,7 +176,7 @@ export class CubicEquation extends React.Component<CubicEquationScreenProps, Sta
                <Button preset="solve" text="Clear" onPress={this.clear} />
               </View>
            </View>
-           <View style={{ justifyContent: 'space-around', alignItems: 'center', flex:0.2}}>
+           <View style={{ justifyContent: 'space-around', alignItems: 'center', flex: 0.2}}>
             {
               roots && roots.map((item, index) => {
                 const ind = index + 1

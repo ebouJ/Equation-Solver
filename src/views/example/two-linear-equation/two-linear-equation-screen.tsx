@@ -6,6 +6,7 @@ import { Header } from '../../shared/header'
 import { Button } from '../../shared/button'
 import Toast from 'react-native-simple-toast'
 import { TextField } from '../../shared/text-field'
+import isNotValid from '../../../lib/isValid'
 import { NavigationScreenProps } from "react-navigation"
 import TwoVariableSolver from '../../../lib/twoVariables'
 
@@ -80,7 +81,7 @@ export class TwoLinearEquation extends React.Component<TwoLinearEquationScreenPr
   state = initialState
   solve = async () => {
     const { x1, x2 , y1, y2, z1, z2  } = this.state
-    if(isNaN(x1) || isNaN(x2) || isNaN(y1) || isNaN(y2) || isNaN(z2) || isNaN(z1)){
+    if(isNotValid(x1) || isNotValid(x2) || isNotValid(y1) || isNotValid(y2) || isNotValid(z2) || isNotValid(z1)){
       Toast.showWithGravity('The input should be a number.', Toast.SHORT, Toast.CENTER)
        return
     }

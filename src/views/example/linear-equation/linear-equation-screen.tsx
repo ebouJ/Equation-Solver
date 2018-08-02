@@ -6,6 +6,7 @@ import { color } from "../../../theme"
 import Toast from 'react-native-simple-toast'
 import { Header } from '../../shared/header'
 import { Button } from '../../shared/button'
+import isNotValid from '../../../lib/isValid'
 import { TextField } from '../../shared/text-field'
 import { NavigationScreenProps } from "react-navigation"
 
@@ -94,7 +95,7 @@ export class LinearEquation extends React.Component<LinearEquationScreenProps, S
 
   solve = async () => {
     const { a, b, c  } = this.state
-    if(isNaN(a) || isNaN(b) || isNaN(c) ){
+    if(isNotValid(a) || isNotValid(b) || isNotValid(c) ){
       Toast.showWithGravity('The input should be a number.', Toast.SHORT, Toast.CENTER)
        return;
     }

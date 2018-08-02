@@ -7,6 +7,7 @@ import Toast from 'react-native-simple-toast'
 import { Button } from '../../shared/button'
 import { TextField } from '../../shared/text-field'
 import { Header } from '../../shared/header'
+import isNotValid from '../../../lib/isValid'
 import { NavigationScreenProps } from "react-navigation"
 import QuadracticSolve from '../../../lib/quadratic'
 
@@ -95,9 +96,9 @@ export class QuadraticEquation extends React.Component<QuadraticEquationScreenPr
   state = initialState
   solve = async () => {
     const { a, b , c  } = this.state
-    if(isNaN(a) || isNaN(b) || isNaN(c)){
+    if(isNotValid(a) || isNotValid(b) || isNotValid(c)){
       Toast.showWithGravity('The input should be a number.', Toast.SHORT, Toast.CENTER)
-       return
+      return
     }
 
 
@@ -105,6 +106,7 @@ export class QuadraticEquation extends React.Component<QuadraticEquationScreenPr
     this.setState({ roots })
 
   }
+
 
   clear = () => {
     this.setState(initialState)
