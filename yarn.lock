@@ -7977,7 +7977,7 @@ react-native-i18n@2.0.12:
   dependencies:
     i18n-js "^3.0.3"
 
-react-native-iphone-x-helper@^1.0.2:
+react-native-iphone-x-helper@^1.0.1, react-native-iphone-x-helper@^1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.0.3.tgz#7a2f1e0574e899a0f1d426e6167fd98990083214"
 
@@ -7987,6 +7987,17 @@ react-native-katex@^0.3.0:
   dependencies:
     katex "^0.10.0-beta"
     prop-types "^15.6.0"
+
+react-native-keyboard-aware-scroll-view@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/react-native-keyboard-aware-scroll-view/-/react-native-keyboard-aware-scroll-view-0.6.0.tgz#0f15bd7d09c0cb48a4ab9ba0d83897fc84b1a1e1"
+  dependencies:
+    prop-types "^15.6.0"
+    react-native-iphone-x-helper "^1.0.1"
+
+react-native-keyboard-aware-view@^0.0.14:
+  version "0.0.14"
+  resolved "https://registry.yarnpkg.com/react-native-keyboard-aware-view/-/react-native-keyboard-aware-view-0.0.14.tgz#4cb0079c97a3f85172e451267e333db95cc70372"
 
 react-native-keychain@3.0.0-rc.3:
   version "3.0.0-rc.3"

@@ -1,5 +1,5 @@
 import * as React from "react"
-import { View, TextInput, TextStyle, ViewStyle } from "react-native"
+import { View, TextInput, TextStyle, ViewStyle, Platform } from "react-native"
 import { color, spacing, typography } from "../../../theme"
 import { translate } from "../../../i18n"
 import { Text } from "../text"
@@ -42,6 +42,7 @@ export class TextField extends React.Component<TextFieldProps, {}> {
     const containerStyle: ViewStyle = { ...CONTAINER, ...PRESETS[preset], ...styleOverride }
     const inputStyle: TextStyle = { ...INPUT, ...inputStyleOverride }
     const actualPlaceholder = placeholderTx ? translate(placeholderTx) : placeholder
+    const keyboardType = Platform.OS === 'ios' ? 'numbers-and-punctuation' : 'default'
 
     return (
       <View style={containerStyle}>
@@ -52,6 +53,8 @@ export class TextField extends React.Component<TextFieldProps, {}> {
           underlineColorAndroid={color.transparent}
           {...rest}
           style={inputStyle}
+          keyboardType={keyboardType}
+          autoCorrect={false}
         />
       </View>
     )

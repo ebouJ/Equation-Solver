@@ -1,5 +1,5 @@
 import * as React from "react"
-import { ViewStyle, TextStyle, View, Dimensions } from "react-native"
+import { ViewStyle, TextStyle, View, Dimensions, ScrollView } from "react-native"
 import { Text } from "../../shared/text"
 import Katex from 'react-native-katex';
 import { color } from "../../../theme"
@@ -7,6 +7,7 @@ import { Header } from '../../shared/header'
 import { TextField } from '../../shared/text-field'
 import { Button } from '../../shared/button'
 import isNotValid from '../../../lib/isValid'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { NavigationScreenProps } from "react-navigation"
 import SolveCubic from '../../../lib/cubic'
 
@@ -130,6 +131,7 @@ export class CubicEquation extends React.Component<CubicEquationScreenProps, Sta
               onError={() => console.error('Error')}
             />
            </View>
+           <KeyboardAwareScrollView contentContainerStyle={{ flex: 1}}> 
            <View style={{ flex: 0.6,justifyContent: 'space-around',}}>
            <View style={InputView}>
                 <Text style={textStyle}>a  =</Text>
@@ -176,6 +178,7 @@ export class CubicEquation extends React.Component<CubicEquationScreenProps, Sta
                <Button preset="solve" text="Clear" onPress={this.clear} />
               </View>
            </View>
+           </KeyboardAwareScrollView>
            <View style={{ justifyContent: 'space-around', alignItems: 'center', flex: 0.2}}>
             {
               roots && roots.map((item, index) => {

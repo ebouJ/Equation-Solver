@@ -1,14 +1,16 @@
 import * as React from "react"
-import { ViewStyle, TextStyle, View , Dimensions} from "react-native"
+import { ViewStyle, TextStyle, View , Dimensions,  Keyboard, ScrollView} from "react-native"
 import { Text } from "../../shared/text"
 import { color } from "../../../theme"
 import Toast from 'react-native-simple-toast'
 import { Header } from '../../shared/header'
 import { Button } from '../../shared/button'
 import { TextField } from '../../shared/text-field'
+import { KeyboardAwareView } from 'react-native-keyboard-aware-view'
 import { NavigationScreenProps } from "react-navigation"
 import isNotValid from '../../../lib/isValid'
 import ThreeVariableSolver from '../../../lib/threeVariables'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 export interface ThreeLinearEquationScreenProps extends NavigationScreenProps<{}> {
 }
@@ -92,6 +94,7 @@ export class ThreeLinearEquation extends React.Component<ThreeLinearEquationScre
   state = initialState
 
   solve = async () => {
+    await Keyboard.dismiss()
     const matrix = []
     const { x1, x2, x3, y1, y2, y3, z1, z2, z3, w1, w2, w3 } = this.state
     if(isNotValid(x1) || isNotValid(x2) || isNotValid(x3) || isNotValid(y1) || isNotValid(y2) || isNotValid(y3) || isNotValid(z1) || isNotValid(z2) || isNotValid(z3) || isNotValid(w1) || isNotValid(w2) || isNotValid(w3)){
@@ -99,11 +102,14 @@ export class ThreeLinearEquation extends React.Component<ThreeLinearEquationScre
        return
     }
 
+    
+
     matrix.push([Number(x1),Number(y1),Number(z1),Number(w1)])
     matrix.push([Number(x2),Number(y2),Number(z2),Number(w2)])
     matrix.push([Number(x3),Number(y3),Number(z3),Number(w3)])
     const roots = await ThreeVariableSolver(matrix)
     this.setState({ roots })
+    
 
   }
 
@@ -123,13 +129,14 @@ export class ThreeLinearEquation extends React.Component<ThreeLinearEquationScre
           leftIcon="chevron-left"
           onLeftPress={() => goBack()}
            />
+          <KeyboardAwareScrollView contentContainerStyle={{ flex: 1}}> 
+            <ScrollView style={{ flex: 1}}>
            <View style={{flex: 0.7, justifyContent: 'space-around'}} >
             <View style={InputView}>
                 <TextField 
                   style={Input} 
                   value={x1}
                   inputStyle={inputStyle}
-                  keyboardType={'numeric'}
                   onChangeText={x1 => this.setState({ x1})}
                 />
                 <Text style={textStyle}> x +</Text>
@@ -137,7 +144,6 @@ export class ThreeLinearEquation extends React.Component<ThreeLinearEquationScre
                   style={Input} 
                   value={y1}
                   inputStyle={inputStyle}
-                  keyboardType={'numeric'}
                   onChangeText={y1 => this.setState({y1})}
                 />
                 <Text style={textStyle}> y +</Text>
@@ -145,7 +151,6 @@ export class ThreeLinearEquation extends React.Component<ThreeLinearEquationScre
                   style={Input} 
                   value={z1}
                   inputStyle={inputStyle}
-                  keyboardType={'numeric'}
                   onChangeText={z1 => this.setState({z1})}
                 />
                 <Text style={textStyle}> z =</Text>
@@ -153,7 +158,6 @@ export class ThreeLinearEquation extends React.Component<ThreeLinearEquationScre
                   style={Input} 
                   value={w1}
                   inputStyle={inputStyle}
-                  keyboardType={'numeric'}
                   onChangeText={w1 => this.setState({w1})}
                 />  
            </View>
@@ -162,7 +166,6 @@ export class ThreeLinearEquation extends React.Component<ThreeLinearEquationScre
                   style={Input} 
                   value={x2}
                   inputStyle={inputStyle}
-                  keyboardType={'numeric'}
                   onChangeText={x2 => this.setState({ x2})}
                 />
                 <Text style={textStyle}> x +</Text>
@@ -170,7 +173,6 @@ export class ThreeLinearEquation extends React.Component<ThreeLinearEquationScre
                   style={Input} 
                   value={y2}
                   inputStyle={inputStyle}
-                  keyboardType={'numeric'}
                   onChangeText={y2 => this.setState({y2})}
                 />
                 <Text style={textStyle}> y +</Text>
@@ -178,7 +180,6 @@ export class ThreeLinearEquation extends React.Component<ThreeLinearEquationScre
                   style={Input} 
                   value={z2}
                   inputStyle={inputStyle}
-                  keyboardType={'numeric'}
                   onChangeText={z2 => this.setState({z2})}
                 />
                 <Text style={textStyle}> z =</Text>
@@ -186,7 +187,6 @@ export class ThreeLinearEquation extends React.Component<ThreeLinearEquationScre
                   style={Input} 
                   value={w2}
                   inputStyle={inputStyle}
-                  keyboardType={'numeric'}
                   onChangeText={w2 => this.setState({w2})}
                 />  
            </View>
@@ -195,7 +195,6 @@ export class ThreeLinearEquation extends React.Component<ThreeLinearEquationScre
                   style={Input} 
                   value={x3}
                   inputStyle={inputStyle}
-                  keyboardType={'numeric'}
                   onChangeText={x3 => this.setState({x3})}
                 />
                 <Text style={textStyle}> x +</Text>
@@ -203,7 +202,6 @@ export class ThreeLinearEquation extends React.Component<ThreeLinearEquationScre
                   style={Input} 
                   value={y3}
                   inputStyle={inputStyle}
-                  keyboardType={'numeric'}
                   onChangeText={y3 => this.setState({y3})}
                 />
                 <Text style={textStyle}> y +</Text>
@@ -211,7 +209,6 @@ export class ThreeLinearEquation extends React.Component<ThreeLinearEquationScre
                   style={Input} 
                   value={z3}
                   inputStyle={inputStyle}
-                  keyboardType={'numeric'}
                   onChangeText={z3 => this.setState({z3})}
                 />
                 <Text style={textStyle}> z =</Text>
@@ -219,7 +216,6 @@ export class ThreeLinearEquation extends React.Component<ThreeLinearEquationScre
                   style={Input} 
                   value={w3}
                   inputStyle={inputStyle}
-                  keyboardType={'numeric'}
                   onChangeText={w3 => this.setState({w3})}
                 />  
            </View>
@@ -235,6 +231,8 @@ export class ThreeLinearEquation extends React.Component<ThreeLinearEquationScre
               })
             }
             </View>
+            </ScrollView>
+          </KeyboardAwareScrollView>
       </View>
     )
   }
