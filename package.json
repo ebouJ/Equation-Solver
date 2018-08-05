@@ -33,7 +33,6 @@
     "react-mathjax2": "^0.0.1",
     "react-native": "0.55.4",
     "react-native-i18n": "2.0.12",
-    "react-native-katex": "^0.3.0",
     "react-native-keyboard-aware-scroll-view": "^0.6.0",
     "react-native-keyboard-aware-view": "^0.0.14",
     "react-native-keychain": "3.0.0-rc.3",

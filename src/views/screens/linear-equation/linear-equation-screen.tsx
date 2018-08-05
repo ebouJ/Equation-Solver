@@ -1,39 +1,37 @@
 import * as React from "react"
-import { ViewStyle, TextStyle, View, Dimensions } from "react-native"
-import Katex from 'react-native-katex'
+import { 
+  ViewStyle, 
+  View, 
+  TextStyle, 
+  Dimensions, 
+  ScrollView, 
+  ImageStyle,
+  Image } from "react-native"
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { NavigationScreenProps } from "react-navigation"
+import Toast from 'react-native-simple-toast'
+
 import { Text } from "../../shared/text"
 import { color } from "../../../theme"
-import Toast from 'react-native-simple-toast'
-import { Button } from '../../shared/button'
-import { TextField } from '../../shared/text-field'
 import { Header } from '../../shared/header'
+import { Button } from '../../shared/button'
 import isNotValid from '../../../lib/isValid'
-import { NavigationScreenProps } from "react-navigation"
-import QuadracticSolve from '../../../lib/quadratic'
+import { TextField } from '../../shared/text-field'
 
-export interface QuadraticEquationScreenProps extends NavigationScreenProps<{}> {
+
+export interface LinearEquationScreenProps extends NavigationScreenProps<{}> {
 }
 
+
+
 const { width, height } = Dimensions.get('window')
+
 const ROOT: ViewStyle = {
   backgroundColor: color.palette.black,
   flex: 1
 }
 const TextStyle: TextStyle = {
   fontSize: 20
-}
-const HeaderStyle: ViewStyle = {
-  backgroundColor: color.primaryDarker,
-}
-const EquationView: ViewStyle = {
-  width: width,
-  height: height / 8,
-}
-
-const textStyle: TextStyle = {
-  marginTop: 15, 
-  fontSize: 20,
-  color: 'white'
 }
 const InputView: ViewStyle = {
   flexDirection: 'row',
@@ -50,6 +48,18 @@ const Input: ViewStyle = {
   height: 15,
   marginLeft: 20
 }
+const HeaderStyle: ViewStyle = {
+  backgroundColor: color.primaryDarker,
+}
+const EquationView: ViewStyle = {
+  width: width,
+  height: height / 8,
+}
+
+const textStyle: TextStyle = {
+  marginTop: 15, 
+  fontSize: 20
+}
 
 const ButtonView: ViewStyle = {
   flexDirection: 'row', 
@@ -57,29 +67,14 @@ const ButtonView: ViewStyle = {
   justifyContent: 'space-between'
 }
 
-
-const inlineStyle =`
-html, body {
-  display: flex;
-  background-color: #1d1d1d;
-  justify-content: center;
-  align-items: center;
-  padding: 0;
-  margin-top: 9px;
+const ImageStyle: ImageStyle = {
+  width: width - 20
 }
-.katex {
-  font-size: 5em;
-  margin: 0;
-  display: flex;
-  color: white;
-}
-`;
 
 interface State {
   a: string,
   b: string,
   c: string,
-  loaded: boolean,
   roots: string[]
 }
 
@@ -87,60 +82,58 @@ const initialState = {
   a: null,
   b: null,
   c: null,
-  loaded: false,
   roots: null
 }
 
-export class QuadraticEquation extends React.Component<QuadraticEquationScreenProps, State> {
-
+export class LinearEquation extends React.Component<LinearEquationScreenProps, State> {
+  
   state = initialState
+
   solve = async () => {
-    const { a, b , c  } = this.state
-    if(isNotValid(a) || isNotValid(b) || isNotValid(c)){
-      Toast.showWithGravity('The input should be a number.', Toast.SHORT, Toast.CENTER)
-      return
+    const { a, b, c  } = this.state
+    if(isNotValid(a) || isNotValid(b) || isNotValid(c) ){
+      
+       return;
     }
 
-
-    const roots = await QuadracticSolve(Number(a),Number(b),Number(c))
+    const roots = []
+    if( a == 0){
+      Toast.showWithGravity('The input is not a linear equation.', Toast.SHORT, Toast.CENTER)
+    } else {
+      roots.push((c - b) / a)
+    }
     this.setState({ roots })
-
   }
-
 
   clear = () => {
     this.setState(initialState)
   }
   render () {
     const { goBack } = this.props.navigation
-    const { roots, a, b , c } = this.state
-
+    const { roots, a, b, c} = this.state
     return (
-      <View style={ROOT}>
+      
+      <ScrollView style={ROOT} scrollEnabled={false} >
         <Header  
-          headerTx="quadratic.header" 
+          headerTx="linear.header" 
           style={HeaderStyle} 
           titleStyle={TextStyle}
           leftIcon="chevron-left"
           onLeftPress={() => goBack()}
            />
+           <KeyboardAwareScrollView contentContainerStyle={{ flex: 1}}> 
           <View style={EquationView}> 
-           <Katex
-              expression="ax^2 + bx + c = 0"
-              style={{ flex: 1 }}
-              inlineStyle={inlineStyle}
-              displayMode={false}
-              colorIsTextColor={false}
-            />
+          <Image source={require('../../../images/linear.png')} resizeMode="contain" style={ImageStyle} />
            </View>
+           
            <View style={InputView}>
                 <Text style={textStyle}> a  = </Text>
                 <TextField 
-                  style={Input} 
+                  style={Input}
+                  onChangeText={ a => this.setState({ a})} 
                   value={a}
                   inputStyle={inputStyle}
                   keyboardType={'numeric'}
-                  onChangeText={(a) => this.setState({ a })}
                 />
            </View>
            <View style={InputView}>
@@ -148,34 +141,36 @@ export class QuadraticEquation extends React.Component<QuadraticEquationScreenPr
                 <TextField 
                   style={Input} 
                   value={b}
+                  onChangeText={b => this.setState({b})} 
                   inputStyle={inputStyle}
                   keyboardType={'numeric'}
-                  onChangeText={b => this.setState({ b })}
                 />
            </View>
            <View style={InputView}>
                 <Text style={textStyle}> c  = </Text>
                 <TextField 
                   style={Input} 
+                  onChangeText={c => this.setState({c})} 
                   value={c}
                   inputStyle={inputStyle}
                   keyboardType={'numeric'}
-                  onChangeText={c => this.setState({ c })}
                 />
            </View>
            <View style={ButtonView}>
-              <Button preset="solve" text="Solve" onPress={this.solve} />
-              <Button preset="solve" text="Clear" onPress={this.clear} />
+           <Button preset="solve" text="Solve" onPress={this.solve} />
+           <Button preset="solve" text="Clear" onPress={this.clear} />
            </View>
-           <View style={{ justifyContent: 'center', alignItems: 'center'}}>
+           <View style={{ justifyContent: 'space-around', alignItems: 'center', flex: 0.2}}>
             {
               roots && roots.map((item, index) => {
                 const ind = index + 1
-                  return <Text key={index} style={textStyle}>{"x" + ind  + " = " + item}</Text>
+                  return <Text key={index} style={textStyle}>{"x" + ind  + " = " + item.toFixed(3)}</Text>
               })
             }
             </View>
-      </View>
+      
+      </KeyboardAwareScrollView> 
+      </ScrollView>
     )
   }
 }

@@ -1,13 +1,18 @@
 import * as React from "react"
-import { ViewStyle, TextStyle, View, Dimensions } from "react-native"
+import { ViewStyle, 
+  TextStyle, 
+  View, 
+  Dimensions, 
+  Keyboard } from "react-native"
+import { NavigationScreenProps } from "react-navigation"
+import Toast from 'react-native-simple-toast'
+
 import { Text } from "../../shared/text"
 import { color } from "../../../theme"
 import { Header } from '../../shared/header'
 import { Button } from '../../shared/button'
-import Toast from 'react-native-simple-toast'
 import { TextField } from '../../shared/text-field'
 import isNotValid from '../../../lib/isValid'
-import { NavigationScreenProps } from "react-navigation"
 import TwoVariableSolver from '../../../lib/twoVariables'
 
 export interface TwoLinearEquationScreenProps extends NavigationScreenProps<{}> {
@@ -80,6 +85,7 @@ const variable = {
 export class TwoLinearEquation extends React.Component<TwoLinearEquationScreenProps, State> {
   state = initialState
   solve = async () => {
+    Keyboard.dismiss()
     const { x1, x2 , y1, y2, z1, z2  } = this.state
     if(isNotValid(x1) || isNotValid(x2) || isNotValid(y1) || isNotValid(y2) || isNotValid(z2) || isNotValid(z1)){
       Toast.showWithGravity('The input should be a number.', Toast.SHORT, Toast.CENTER)

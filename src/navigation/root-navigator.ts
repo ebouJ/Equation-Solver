@@ -1,10 +1,10 @@
 import { createStackNavigator } from "react-navigation"
-import { Home } from "../views/example/home/home-screen"
-import { ThreeLinearEquation } from "../views/example/three-linear-equation/three-linear-equation-screen"
-import { TwoLinearEquation } from "../views/example/two-linear-equation/two-linear-equation-screen"
-import { CubicEquation } from "../views/example/cubic-equation/cubic-equation-screen"
-import { QuadraticEquation } from "../views/example/quadratic-equation/quadratic-equation-screen"
-import { LinearEquation } from "../views/example/linear-equation/linear-equation-screen"
+import { Home } from "../views/screens/home/home-screen"
+import { ThreeLinearEquation } from "../views/screens/three-linear-equation/three-linear-equation-screen"
+import { TwoLinearEquation } from "../views/screens/two-linear-equation/two-linear-equation-screen"
+import { CubicEquation } from "../views/screens/cubic-equation/cubic-equation-screen"
+import { QuadraticEquation } from "../views/screens/quadratic-equation/quadratic-equation-screen"
+import { LinearEquation } from "../views/screens/linear-equation/linear-equation-screen"
 
 export const RootNavigator = createStackNavigator(
   {

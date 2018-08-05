@@ -1,16 +1,22 @@
 import * as React from "react"
-import { ViewStyle, TextStyle, View , Dimensions,  Keyboard, ScrollView} from "react-native"
+import { 
+  ViewStyle, 
+  TextStyle, 
+  View , 
+  Dimensions,  
+  Keyboard, } from "react-native"
+import Toast from 'react-native-simple-toast'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { NavigationScreenProps } from "react-navigation"
+
 import { Text } from "../../shared/text"
 import { color } from "../../../theme"
-import Toast from 'react-native-simple-toast'
 import { Header } from '../../shared/header'
 import { Button } from '../../shared/button'
 import { TextField } from '../../shared/text-field'
-import { KeyboardAwareView } from 'react-native-keyboard-aware-view'
-import { NavigationScreenProps } from "react-navigation"
 import isNotValid from '../../../lib/isValid'
 import ThreeVariableSolver from '../../../lib/threeVariables'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+
 
 export interface ThreeLinearEquationScreenProps extends NavigationScreenProps<{}> {
 }
@@ -98,15 +104,10 @@ export class ThreeLinearEquation extends React.Component<ThreeLinearEquationScre
     const matrix = []
     const { x1, x2, x3, y1, y2, y3, z1, z2, z3, w1, w2, w3 } = this.state
     if(isNotValid(x1) || isNotValid(x2) || isNotValid(x3) || isNotValid(y1) || isNotValid(y2) || isNotValid(y3) || isNotValid(z1) || isNotValid(z2) || isNotValid(z3) || isNotValid(w1) || isNotValid(w2) || isNotValid(w3)){
-      Toast.showWithGravity('The input should be a number.', Toast.SHORT, Toast.CENTER)
-       return
+      return Toast.showWithGravity('The input should be a number.', Toast.SHORT, Toast.CENTER)
     }
 
-    
-
-    matrix.push([Number(x1),Number(y1),Number(z1),Number(w1)])
-    matrix.push([Number(x2),Number(y2),Number(z2),Number(w2)])
-    matrix.push([Number(x3),Number(y3),Number(z3),Number(w3)])
+    matrix.push([Number(x1),Number(y1),Number(z1),Number(w1)],[Number(x2),Number(y2),Number(z2),Number(w2)], [Number(x3),Number(y3),Number(z3),Number(w3)])
     const roots = await ThreeVariableSolver(matrix)
     this.setState({ roots })
     
@@ -129,8 +130,7 @@ export class ThreeLinearEquation extends React.Component<ThreeLinearEquationScre
           leftIcon="chevron-left"
           onLeftPress={() => goBack()}
            />
-          <KeyboardAwareScrollView contentContainerStyle={{ flex: 1}}> 
-            <ScrollView style={{ flex: 1}}>
+          <KeyboardAwareScrollView style={ROOT}> 
            <View style={{flex: 0.7, justifyContent: 'space-around'}} >
             <View style={InputView}>
                 <TextField 
@@ -231,7 +231,6 @@ export class ThreeLinearEquation extends React.Component<ThreeLinearEquationScre
               })
             }
             </View>
-            </ScrollView>
           </KeyboardAwareScrollView>
       </View>
     )
